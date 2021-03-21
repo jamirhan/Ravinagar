@@ -1,0 +1,10 @@
+#ifndef RAVINAGAR_COINSMODEBUILDER_H
+#define RAVINAGAR_COINSMODEBUILDER_H
+
+
+class CoinsModeBuilder {
+
+};
+
+
+#endif //RAVINAGAR_COINSMODEBUILDER_H

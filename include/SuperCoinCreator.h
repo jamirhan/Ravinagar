@@ -1,0 +1,10 @@
+#ifndef RAVINAGAR_SUPERCOINCREATOR_H
+#define RAVINAGAR_SUPERCOINCREATOR_H
+
+
+class SuperCoinCreator {
+
+};
+
+
+#endif //RAVINAGAR_SUPERCOINCREATOR_H

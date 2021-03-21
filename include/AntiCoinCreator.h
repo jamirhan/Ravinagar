@@ -1,0 +1,10 @@
+#ifndef RAVINAGAR_ANTICOINCREATOR_H
+#define RAVINAGAR_ANTICOINCREATOR_H
+
+
+class AntiCoinCreator {
+
+};
+
+
+#endif //RAVINAGAR_ANTICOINCREATOR_H

@@ -1,0 +1,10 @@
+#ifndef RAVINAGAR_EMPTYMODEBUILDER_H
+#define RAVINAGAR_EMPTYMODEBUILDER_H
+
+
+class EmptyModeBuilder {
+
+};
+
+
+#endif //RAVINAGAR_EMPTYMODEBUILDER_H

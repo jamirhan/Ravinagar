@@ -6,7 +6,11 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(HEADERS include/Environment.h
         include/EnvironmentBuilder.h
+        include/EmptyModeBuilder.h
+        include/CombinedModeBuilder.h
+        include/CoinsBuilder.h
         include/Game.h
+        include/CoinsModeBuilder.h
         include/CoinsFactory.h
         include/AntiCoinCreator.h
         include/ClassicCoinCreator.h
@@ -37,7 +41,11 @@ set(HEADERS include/Environment.h
 
 set(SOURCES src/Environment.cpp
         src/EnvironmentBuilder.cpp
+        src/EmptyModeBuilder.cpp
+        src/CombinedModeBuilder.cpp
+        src/CoinsBuilder.cpp
         src/Game.cpp
+        src/CoinsModeBuilder.cpp
         src/CoinsFactory.cpp
         src/AntiCoinCreator.cpp
         src/ClassicCoinCreator.cpp
@@ -65,6 +73,7 @@ set(SOURCES src/Environment.cpp
         src/AntiCoin.cpp
         src/SuperCoin.cpp
         src/Player.cpp)
+
 
 include_directories(src, include)
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} src/main.cpp)
