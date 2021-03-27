@@ -1,4 +1,9 @@
-#include "../include/Player.h"
+#include "Player.h"
 
-Player::Player(const Point& point) : cords(point), points(0) {
+
+Player::Player(int x, int y): cords(Point(x, y)) {};
+
+
+void Player::update_coins(int new_coins) {
+    points += new_coins;
 }
