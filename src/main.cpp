@@ -1,10 +1,5 @@
-#include "Player.h"
-#include <iostream>
+#include "Game/Game.h"
 
 int main() {
-    Player player({1, 2});
-    int x;
-    std::cout << "OK";
-    std::cin.get();
-    return 0;
+    Game::get_instance()->start();
 }

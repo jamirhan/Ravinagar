@@ -1,1 +1,0 @@
-#include "../include/ClassicCoin.h"
