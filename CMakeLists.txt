@@ -4,11 +4,8 @@ project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
 
-# execute_process(
-#     COMMAND mkdir ${CMAKE_CURRENT_SOURCE_DIR}/bin
-# )
 
-# set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 set(HEADERS src/Environment.h
         src/Coins/Builder/CoinsBuilder.h
@@ -17,7 +14,6 @@ set(HEADERS src/Environment.h
         src/Units/Unit.h
         src/Message.h
         src/Graph.h
-        src/tools.h
         src/Commutator.h
         src/Traps/Trap.h
         src/Coins/Coin.h
@@ -31,6 +27,11 @@ set(HEADERS src/Environment.h
         src/Coins/Builder/ClassicCoinCreator.h
         src/Coins/Builder/SuperCoinCreator.h
         src/Point.h
+        src/Coins/CoinsComposer.h
+        src/Traps/TrapsComposer.h
+        src/Units/UnitsComposer.h
+        src/GraphsComposer.h
+        src/Poly.h
 )
 
 set(SOURCES
@@ -50,6 +51,12 @@ set(SOURCES
         src/Point.cpp
         src/Player.cpp
         src/Coins/Coin.cpp
+        src/Coins/CoinsComposer.cpp
+        src/Traps/TrapsComposer.cpp
+        src/GraphsComposer.cpp
+        src/Poly.cpp
+        src/Graph.cpp
+        src/Traps/Trap.cpp
 )
 
 include_directories(

@@ -17,6 +17,7 @@ class Game {
     Environment* get_mode();
     Player* set_player(int);
     int get_size();
+    Message* decompose(std::string, int);
 
 public:
 

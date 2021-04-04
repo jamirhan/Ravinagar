@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <queue>
+#include "Message.h"
 
 
 class Server {
@@ -8,6 +9,6 @@ class Server {
     inline static Server* inst;
     Server();
 public:
-    std::string get();
+    RawCommand get();
     static Server* get_instance();
 };

@@ -3,7 +3,6 @@
 #include "../Traps/Trap.h"
 #include "Coin.h"
 #include "Player.h"
-#include "tools.h"
 #include "Builder/CoinsBuilder.h"
 
 class Environment {

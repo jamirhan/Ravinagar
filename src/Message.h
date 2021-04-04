@@ -7,6 +7,7 @@
 #include "../Traps/Trap.h"
 #include "Unit.h"
 #include "Environment.h"
+#include "Poly.h"
 
 
 struct Message { // abstract class
@@ -47,4 +48,16 @@ struct EndMsg: virtual Message {
 struct CommandMsg: virtual Message {
     std::string msg;
     CommandMsg(std::string);
+};
+
+struct CreateGraph: virtual Message {
+    CreateGraph(Poly, int);
+    Poly polynom;
+    int player_id;
+};
+
+struct RawCommand: virtual Message {
+    RawCommand(std::string, int);
+    std::string cmd;
+    int player_id;
 };

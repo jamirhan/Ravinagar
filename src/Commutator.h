@@ -9,6 +9,7 @@
 class Commutator {
     inline static Commutator* obj;
     Commutator();
+    
 public:
     void receive(Message*);
     static Commutator* get_instance();

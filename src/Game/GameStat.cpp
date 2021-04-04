@@ -9,29 +9,32 @@ GameStat* GameStat::get_instance() {
     return instance;
 }
 
-void GameStat::update_coins(CoinUpdMsg* msg) {
-    gtools::insert(coins, msg->ins);
-    gtools::del(coins, msg->del);
+TrapsComposer& GameStat::get_traps() {
+    return traps;
 }
 
-void GameStat::update_graphs(GraphUpdMsg* msg) {
-    gtools::insert(graphs, msg->ins);
-    gtools::del(graphs, msg->del);
+CoinsComposer& GameStat::get_coins() {
+    return coins;
 }
 
-void GameStat::update_traps(TrapUpdMsg* msg) {
-    gtools::insert(traps, msg->ins);
-    gtools::del(traps, msg->del);
+GraphsComposer& GameStat::get_graphs() {
+    return graphs;
 }
 
-void GameStat::update_units(UnitUpdMsg* msg) {
-    gtools::insert(units, msg->ins);
-    gtools::del(units, msg->del);
+UnitsComposer& GameStat::get_units() {
+    return units;
 }
 
 void GameStat::set(Environment* env) {
-    update_coins(new CoinUpdMsg(&env->coins, nullptr));
+    coins.append(env->coins);
     size = env->size;
     p1 = env->p1;
     p2 = env->p2;
+}
+
+Player* GameStat::get_player(int num) {
+    if (num == 1)
+        return p1;
+    else
+        return p2;
 }

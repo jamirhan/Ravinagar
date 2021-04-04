@@ -1,7 +1,7 @@
 #include "Server.h"
 
-std::string Server::get() {
-    return "Wish you were here by Pink Floyd";
+RawCommand Server::get() {
+    return RawCommand("Graph x^2 + 2x + 1", 1);
 }
 
 Server::Server() = default;
