@@ -16,9 +16,9 @@
 class GameStat {
 private:
     inline static GameStat* instance;
-    Player* p1;
-    Player* p2;
-    int size;
+    Player* p1 = nullptr;
+    Player* p2 = nullptr;
+    int size = 0;
     TrapsComposer traps;
     CoinsComposer coins;
     GraphsComposer graphs;

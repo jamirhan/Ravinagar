@@ -36,7 +36,7 @@ using UnitUpdMsg = ins_del_class<Unit*>;
 
 struct EnvMsg: virtual Message {
     Environment* env;
-    EnvMsg(Environment*);
+    explicit EnvMsg(Environment*);
 };
 
 struct EndMsg: virtual Message {
@@ -47,13 +47,20 @@ struct EndMsg: virtual Message {
 
 struct CommandMsg: virtual Message {
     std::string msg;
-    CommandMsg(std::string);
+    explicit CommandMsg(std::string);
 };
 
 struct CreateGraph: virtual Message {
     CreateGraph(Poly, int);
     Poly polynom;
     int player_id;
+};
+
+struct CreateUnit: virtual Message {
+    CreateUnit(int, int, std::string);
+    int player_id;
+    int graph_num;
+    std::string unit_name;
 };
 
 struct RawCommand: virtual Message {

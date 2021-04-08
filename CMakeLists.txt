@@ -32,7 +32,7 @@ set(HEADERS src/Environment.h
         src/Units/UnitsComposer.h
         src/GraphsComposer.h
         src/Poly.h
-)
+        )
 
 set(SOURCES
         src/Message.cpp
@@ -57,7 +57,9 @@ set(SOURCES
         src/Poly.cpp
         src/Graph.cpp
         src/Traps/Trap.cpp
-)
+        src/Units/UnitsComposer.cpp
+        src/Units/Unit.cpp
+        )
 
 include_directories(
         ${PROJECT_NAME} PUBLIC

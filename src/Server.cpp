@@ -1,7 +1,14 @@
 #include "Server.h"
 
 RawCommand Server::get() {
-    return RawCommand("Graph x^2 + 2x + 1", 1);
+    if (temp == 0) {
+        ++temp;
+        return RawCommand("Graph x^5 + x^2 - 2x + 1", 1);
+    }
+    else if (temp == 1) {
+        return RawCommand("Unit Spy 1", 1);
+    }
+    return RawCommand(".", 1);
 }
 
 Server::Server() = default;

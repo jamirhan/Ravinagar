@@ -4,13 +4,14 @@
 #include "Player.h"
 #include "Environment.h"
 #include "Game/GameStat.h"
-
+#include "Units/Unit.h"
 
 class Commutator {
     inline static Commutator* obj;
     Commutator();
     
 public:
-    void receive(Message*);
-    static Commutator* get_instance();
+    static void receive(Message*);
+
+    static Commutator *get_instance();
 };
