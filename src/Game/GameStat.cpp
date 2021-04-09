@@ -1,4 +1,5 @@
 #include "GameStat.h"
+#include "Config.h"
 
 
 GameStat::GameStat() = default;
@@ -27,7 +28,7 @@ UnitsComposer& GameStat::get_units() {
 
 void GameStat::set(Environment* env) {
     coins.append(env->coins);
-    size = env->size;
+    Config::get_instance()->size = env->size;
     p1 = env->p1;
     p2 = env->p2;
 }

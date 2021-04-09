@@ -7,12 +7,8 @@ void Game::start() {
     run();
 }
 
-int Game::get_size() {
-    return 100;
-}
-
 void Game::create_env() {
-    Environment* env = new Environment(get_size());
+    Environment* env = new Environment(Config::get_instance()->size);
     Commutator::get_instance()->receive(new EnvMsg(env));
 }
 
@@ -20,6 +16,7 @@ void Game::run() {
     while (runs) {
         RawCommand command = server->get();
         Commutator::get_instance()->receive(decompose(command.cmd, command.player_id));
+        Commutator::get_instance()->receive(new CreateCoins());
     }
 }
 
@@ -28,13 +25,22 @@ Message* Game::decompose(std::string raw, int player_id) {
     int i = 0; 
     while (i < raw.size() && raw[i] != ' ') {
         first_word += raw[i];
+        i++;
     }
+    std::string rest = raw.substr(first_word.size() + 1);
+    Message *cmd = nullptr;
     if (first_word == "Graph") {
-        std::string raw_poly = raw.substr(5);
-        CreateGraph* cmd = new CreateGraph(Poly(raw_poly), player_id);
-        return cmd;
+        cmd = new CreateGraph(Poly(rest), player_id);
+    } else if (first_word == "CreationTrap") {
+        std::string second_word;
+        i = 0;
+        while (i < rest.size() && rest[i] != ' ') {
+            second_word += rest[i];
+            i++;
+        }
+        cmd = new CreateTrap(second_word, rest.substr(second_word.size() + 1), player_id);
     }
-    return new Message;
+    return cmd;
 }
 
 Game* Game::get_instance() {

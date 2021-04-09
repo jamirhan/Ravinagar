@@ -1,6 +1,7 @@
 #pragma once
 #include <random>
 #include "Builder/CoinsBuilder.h"
+#include "Config.h"
 #include "../Commutator.h"
 #include "../Message.h"
 #include "../Server.h"
@@ -16,7 +17,6 @@ class Game {
     Game() = default;
     Environment* get_mode();
     Player* set_player(int);
-    int get_size();
     Message* decompose(std::string, int);
 
 public:

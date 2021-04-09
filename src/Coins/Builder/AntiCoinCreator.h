@@ -4,5 +4,5 @@
 
 class AntiCoinCreator : public CoinsFactory {
 public:
-    Coin* Create(int) const override;
+    Coin* Create() const override;
 };

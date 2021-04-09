@@ -1,6 +1,5 @@
 #include "Poly.h"
 
-
 bool is_digit(char a) {
         if (static_cast<int>(a) >= 48 && static_cast<int>(a) <= 57)
             return true;
@@ -58,4 +57,5 @@ Poly::Poly(std::string raw) {
             deg = "";
         }
     }
+    last_space = true;
 }

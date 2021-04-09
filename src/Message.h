@@ -56,6 +56,17 @@ struct CreateGraph: virtual Message {
     int player_id;
 };
 
+struct CreateCoins: virtual Message {
+    CreateCoins();
+};
+
+struct CreateTrap: virtual Message {
+    CreateTrap(std::string type, std::string cords, int);
+    std::string type;
+    std::string cords;
+    int player_id;
+};
+
 struct RawCommand: virtual Message {
     RawCommand(std::string, int);
     std::string cmd;

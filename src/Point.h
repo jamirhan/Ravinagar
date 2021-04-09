@@ -8,6 +8,7 @@ class Point {
     static const int epsilon = 1e-5;
 public:
     Point();
+    Point(std::string);
     Point(int x, int y);
     bool operator==(const Point&);
     Point& operator=(const Point&);

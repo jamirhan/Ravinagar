@@ -5,5 +5,5 @@
 
 class CloneCreator : public TrapFactory {
 public:
-    Trap* Create() const override;
+    Trap* Create(const Point& coords, Player* owner) const override;
 };

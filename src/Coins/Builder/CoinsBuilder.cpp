@@ -1,11 +1,8 @@
 #include "CoinsBuilder.h"
 
-CoinsBuilder::CoinsBuilder(int field_size): field_size(field_size) {};
-
-
 void CoinsBuilder::generate(int num, CoinsFactory* coin_factory) {
     for (int i = 0; i < num; ++i) {
-        coins.push_back(coin_factory->Create(field_size));
+        coins.push_back(coin_factory->Create());
     }
 }
 

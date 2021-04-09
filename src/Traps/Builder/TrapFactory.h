@@ -3,8 +3,7 @@
 
 class TrapFactory {
 public:
-    virtual Trap* Create() const = 0;
-    virtual void Check() = 0;
+    virtual Trap* Create(const Point& coords, Player* owner) const = 0;
     virtual ~TrapFactory() {}
 
 };

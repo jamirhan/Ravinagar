@@ -11,7 +11,7 @@ void Environment::make_coins() {
     int a_c = 10;
     int c_c = 20;
     int s_c = 10;
-    CoinsBuilder* cb = new CoinsBuilder(size);
+    CoinsBuilder* cb = new CoinsBuilder();
     cb->set_AntiCoin(a_c)->set_ClassicCoin(c_c)->set_SuperCoin(s_c);
     coins = cb->get_result();
 }

@@ -3,6 +3,6 @@
 
 class CoinsFactory {
 public:
-    virtual Coin* Create(int) const = 0;
+    virtual Coin* Create() const = 0;
     virtual ~CoinsFactory() {}
 };

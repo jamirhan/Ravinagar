@@ -8,10 +8,9 @@
 
 class CoinsBuilder {
     std::deque<Coin*> coins;
-    int field_size;
     void generate(int, CoinsFactory*);
 public:
-    CoinsBuilder(int);
+    CoinsBuilder() = default;
     CoinsBuilder* set_AntiCoin(int);
     CoinsBuilder* set_ClassicCoin(int);
     CoinsBuilder* set_SuperCoin(int);

@@ -18,7 +18,6 @@ private:
     inline static GameStat* instance;
     Player* p1;
     Player* p2;
-    int size;
     TrapsComposer traps;
     CoinsComposer coins;
     GraphsComposer graphs;
@@ -33,3 +32,4 @@ public:
     void set(Environment*);
     Player* get_player(int);
 };
+

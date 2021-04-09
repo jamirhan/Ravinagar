@@ -4,6 +4,7 @@ project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -Wall -Wextra")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
@@ -11,11 +12,21 @@ set(HEADERS src/Environment.h
         src/Coins/Builder/CoinsBuilder.h
         src/Game/GameStat.h
         src/Game/Game.h
+        src/Game/Config.h;
         src/Units/Unit.h
         src/Message.h
         src/Graph.h
         src/Commutator.h
         src/Traps/Trap.h
+        src/Traps/TrapsComposer.h
+        src/Traps/Builder/TrapFactory.h
+        src/Traps/Builder/TrapsBuilder.h
+        src/Traps/Builder/CloneCreator.h
+        src/Traps/Builder/GraphCatcherCreator.h
+        src/Traps/Builder/MineCreator.h
+        src/Traps/Types/Clone.h
+        src/Traps/Types/GraphCatcher.h
+        src/Traps/Types/Mine.h
         src/Coins/Coin.h
         src/Player.h
         src/Server.h
@@ -28,7 +39,6 @@ set(HEADERS src/Environment.h
         src/Coins/Builder/SuperCoinCreator.h
         src/Point.h
         src/Coins/CoinsComposer.h
-        src/Traps/TrapsComposer.h
         src/Units/UnitsComposer.h
         src/GraphsComposer.h
         src/Poly.h
@@ -41,6 +51,7 @@ set(SOURCES
         src/Commutator.cpp
         src/Environment.cpp
         src/Game/Game.cpp
+        src/Game/Config.cpp;
         src/Coins/Types/AntiCoin.cpp
         src/Coins/Types/ClassicCoin.cpp
         src/Coins/Types/SuperCoin.cpp
@@ -52,12 +63,21 @@ set(SOURCES
         src/Player.cpp
         src/Coins/Coin.cpp
         src/Coins/CoinsComposer.cpp
-        src/Traps/TrapsComposer.cpp
         src/GraphsComposer.cpp
         src/Poly.cpp
         src/Graph.cpp
         src/Traps/Trap.cpp
-)
+        src/Traps/TrapsComposer.cpp
+        src/Traps/Builder/TrapFactory.cpp
+        src/Traps/Builder/TrapsBuilder.cpp
+        src/Traps/Builder/CloneCreator.cpp
+        src/Traps/Builder/GraphCatcherCreator.cpp
+        src/Traps/Builder/MineCreator.cpp
+        src/Traps/Types/Clone.cpp
+        src/Traps/Types/GraphCatcher.cpp
+        src/Traps/Types/Mine.cpp
+
+        )
 
 include_directories(
         ${PROJECT_NAME} PUBLIC
