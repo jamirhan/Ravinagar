@@ -10,4 +10,7 @@ class Graph {
 public:
     Graph(Poly, Player*);
     bool includes_point(Point);
+    Player* get_player() {
+        return owner;
+    }
 };

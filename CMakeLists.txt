@@ -4,7 +4,7 @@ project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -Wall -Wextra")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -Wall -Wextra")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
@@ -42,7 +42,7 @@ set(HEADERS src/Environment.h
         src/Units/UnitsComposer.h
         src/GraphsComposer.h
         src/Poly.h
-)
+        )
 
 set(SOURCES
         src/Message.cpp
@@ -76,7 +76,8 @@ set(SOURCES
         src/Traps/Types/Clone.cpp
         src/Traps/Types/GraphCatcher.cpp
         src/Traps/Types/Mine.cpp
-
+        src/Units/UnitsComposer.cpp
+        src/Units/Unit.cpp
         )
 
 include_directories(

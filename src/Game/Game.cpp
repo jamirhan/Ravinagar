@@ -1,5 +1,35 @@
 #include "Game.h"
 
+
+std::string get_prefix(std::string val) {
+    int i = 0;
+    while (val[i] == ' ')
+        ++i;
+    std::string ans;
+    while (i < val.size() && val[i] != ' ') {
+        ans += val[i];
+        ++i;
+    }
+    return ans;
+}
+
+
+std::string remove_prefix(std::string val) {
+    int i = 0;
+    while (val[i] == ' ')
+        ++i;
+    while (i < val.size() && val[i] != ' ') {
+        ++i;
+    }
+    std::string ans;
+    while (i < val.size()) {
+        ans += val[i];
+        ++i;
+    }
+    return ans;
+}
+
+
 void Game::start() {
     runs = true;
     server = Server::get_instance();
@@ -8,40 +38,40 @@ void Game::start() {
 }
 
 void Game::create_env() {
-    Environment* env = new Environment(Config::get_instance()->size);
-    Commutator::get_instance()->receive(new EnvMsg(env));
+    auto env = new Environment(Config::get_instance()->size);
+    Commutator::receive(new EnvMsg(env));
 }
+
 
 void Game::run() {
     while (runs) {
         RawCommand command = server->get();
-        Commutator::get_instance()->receive(decompose(command.cmd, command.player_id));
-        Commutator::get_instance()->receive(new CreateCoins());
+        Commutator::receive(decompose(command.cmd, command.player_id));
+        Commutator::receive(new CreateCoins());
     }
 }
 
+
 Message* Game::decompose(std::string raw, int player_id) {
-    std::string first_word;
-    int i = 0; 
-    while (i < raw.size() && raw[i] != ' ') {
-        first_word += raw[i];
-        i++;
-    }
-    std::string rest = raw.substr(first_word.size() + 1);
-    Message *cmd = nullptr;
+    std::string first_word = get_prefix(raw);
+    raw = remove_prefix(raw);
     if (first_word == "Graph") {
-        cmd = new CreateGraph(Poly(rest), player_id);
+        auto cmd = new CreateGraph(Poly(raw), player_id);
+        return cmd;
+    } else if (first_word == "Unit") {
+        std::string unit_name = get_prefix(raw);
+        raw = remove_prefix(raw);
+        int graph_num = std::stoi(raw);
+        return new CreateUnit(player_id, graph_num, unit_name);
     } else if (first_word == "CreationTrap") {
-        std::string second_word;
-        i = 0;
-        while (i < rest.size() && rest[i] != ' ') {
-            second_word += rest[i];
-            i++;
-        }
-        cmd = new CreateTrap(second_word, rest.substr(second_word.size() + 1), player_id);
+        std::string type = get_prefix(raw);
+        raw = remove_prefix(raw);
+        std::string coords = raw.substr(1);
+        return new CreateTrap(type, coords, player_id);
     }
-    return cmd;
+    return new Message;
 }
+
 
 Game* Game::get_instance() {
     if (!instance)

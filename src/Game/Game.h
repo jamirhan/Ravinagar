@@ -12,16 +12,17 @@ class Game {
     inline static Game* instance;
     bool runs = false;
     Server* server;
+
     void run();
-    void create_env();
+    static void create_env();
     Game() = default;
-    Environment* get_mode();
-    Player* set_player(int);
-    Message* decompose(std::string, int);
+    static Message* decompose(std::string, int);
+    void end();
 
 public:
 
     static Game* get_instance();
-    void start();
+
+    [[maybe_unused]] void start();
 
 };

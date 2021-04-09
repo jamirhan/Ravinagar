@@ -7,6 +7,7 @@
 class Server {
     std::queue<std::string> queries;
     inline static Server* inst;
+    int temp = 2;
     Server();
 public:
     RawCommand get();
