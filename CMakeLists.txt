@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD 17)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -Wall -Wextra")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+set(CMAKE_AUTOMOC ON)
+
+find_package(Qt5 COMPONENTS Network Widgets Core Gui REQUIRED)
 
 set(HEADERS src/Environment.h
         src/Coins/Builder/CoinsBuilder.h
@@ -89,4 +92,8 @@ include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Units
 )
 
+
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} src/main.cpp)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC
+        Qt5::Network Qt5::Widgets Qt5::Core Qt5::Gui)

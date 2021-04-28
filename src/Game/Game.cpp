@@ -38,12 +38,13 @@ void Game::start() {
 }
 
 void Game::create_env() {
-    auto env = new Environment(Config::get_instance()->size);
+    auto env = new Environment(Config::size);
     Commutator::receive(new EnvMsg(env));
 }
 
 
 void Game::run() {
+    server->start();
     while (runs) {
         RawCommand command = server->get();
         Commutator::receive(decompose(command.cmd, command.player_id));

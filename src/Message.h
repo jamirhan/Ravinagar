@@ -84,7 +84,6 @@ struct CreateUnit : virtual Message {
 
 struct RawCommand : virtual Message {
     RawCommand(std::string, int);
-
     std::string cmd;
     int player_id;
 };
