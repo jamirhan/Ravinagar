@@ -42,6 +42,10 @@ void Commutator::receive(Message *message) {
         GameStat::get_instance()->get_units().add_unit(new_unit);
         new_unit->check();
     }
+    else if (dynamic_cast<OutputMessage*>(message)){
+        auto* msg = dynamic_cast<OutputMessage*>(message);
+        Game::get_instance()->write(*msg);
+    }
 }
 
 

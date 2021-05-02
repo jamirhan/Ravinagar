@@ -1,5 +1,7 @@
 #include "Server.h"
 
+#include <utility>
+
 void AuthHandler::pskRequired(QSslPreSharedKeyAuthenticator *auth) {
     auth->setPreSharedKey(QByteArrayLiteral("\x1a\x2b\x3c\x4d\x5e\x6f"));
 }
@@ -45,14 +47,15 @@ std::string Server::get_response() {
 }
 
 quint16 Server::choose_port() {
-    return 22334;
+    return server_port;
 }
 
 QHostAddress Server::get_public_ip() {
-    return QHostAddress("192.168.1.73");
+    return server_addr;
 }
 
 void Server::write_message(QDtls* client, const QByteArray& msg) {
+    std::string f = QString(msg).toStdString();
     client->writeDatagramEncrypted(udpSocket, msg);
 }
 
@@ -61,8 +64,23 @@ bool Server::completed() {
                                       client_2->handshakeState() == QDtls::HandshakeComplete);
 }
 
+bool Server::is_running() {
+    return running;
+}
+
 Server::Server(): udpSocket(new QUdpSocket(nullptr)), server_config(QSslConfiguration::defaultDtlsConfiguration()){
-    udpSocket->bind(get_public_ip(), choose_port());
+    running = udpSocket->bind(get_public_ip(), choose_port());
+}
+
+void Server::write(int player_num, QString msg) {
+    std::string f = msg.toStdString();
+    std::string g = QString(msg.toUtf8()).toStdString();
+    QDtls* cur_client;
+    if (player_num == 1)
+        cur_client = client_1;
+    else
+        cur_client = client_2;
+    cur_client->writeDatagramEncrypted(udpSocket, msg.toUtf8());
 }
 
 void Server::start() {
@@ -89,11 +107,18 @@ void Server::wait_two_connections() {
             }
         }
         if (completed()) {
+            std::cout << 23;
             write_message(client_1, "successful connection.");
             write_message(client_2, "successful connection.");
             break;
         }
     }
+    std::cout << 34;
+}
+
+void Server::set_addr(QHostAddress addr, quint16 port) {
+    server_addr = std::move(addr);
+    server_port = port;
 }
 
 int Server::get_player_number(const QHostAddress& addr, quint16 port) {

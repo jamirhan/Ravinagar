@@ -23,6 +23,10 @@ public:
 
     static Game* get_instance();
 
-    [[maybe_unused]] void start();
+    void start();
+
+    bool set_config(const QHostAddress& addr, quint16 port);
+
+    void write(const OutputMessage& msg);
 
 };

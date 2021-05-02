@@ -74,6 +74,12 @@ struct CreateTrap : virtual Message {
     int player_id;
 };
 
+struct OutputMessage: virtual Message {
+    OutputMessage(int, std::string);
+    int player_num;
+    std::string msg;
+};
+
 struct CreateUnit : virtual Message {
     CreateUnit(int, int, std::string);
 

@@ -8,4 +8,3 @@ void Trap::check(Graph* graph) {
 }
 
 Trap::~Trap() = default;
-

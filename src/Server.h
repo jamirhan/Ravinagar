@@ -12,10 +12,14 @@ public slots:
     void pskRequired(QSslPreSharedKeyAuthenticator *auth);
 };
 
+
 class Server {
     QUdpSocket* udpSocket;
     QDtls* client_1 = nullptr;
     QDtls* client_2 = nullptr;
+    inline static QHostAddress server_addr;
+    inline static quint16 server_port;
+    bool running = false;
     QSslConfiguration server_config;
     AuthHandler handler;
     static Server* instance;
@@ -32,5 +36,8 @@ class Server {
 public:
     static Server* get_instance();
     void start();
+    static void set_addr(QHostAddress addr, quint16 port);
     RawCommand get();
+    bool is_running();
+    void write(int player_num, QString msg);
 };

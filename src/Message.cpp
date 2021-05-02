@@ -19,3 +19,5 @@ CreateCoins::CreateCoins() {};
 CreateTrap::CreateTrap(std::string type, std::string cords, int p_id) : type(type), cords(cords), player_id(p_id) {};
 
 CreateUnit::CreateUnit(int p_id, int g_n, std::string name): player_id(p_id), graph_num(g_n), unit_name(std::move(name)) {}
+
+OutputMessage::OutputMessage(int p_n, std::string msg): player_num(p_n), msg(std::move(msg)) { }

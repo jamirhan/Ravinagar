@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <thread>
 
 
 std::string get_prefix(std::string val) {
@@ -30,12 +31,23 @@ std::string remove_prefix(std::string val) {
 }
 
 
-void Game::start() {
-    runs = true;
+bool Game::set_config(const QHostAddress &addr, quint16 port) {
+    Server::set_addr(addr, port);
     server = Server::get_instance();
+    if (!server->is_running()) {
+        runs = false;
+        return false;
+    }
+    runs = true;
+    return true;
+}
+
+
+void Game::start() {
     create_env();
     run();
 }
+
 
 void Game::create_env() {
     auto env = new Environment(Config::size);
@@ -43,15 +55,18 @@ void Game::create_env() {
 }
 
 
+
 void Game::run() {
     server->start();
     while (runs) {
         RawCommand command = server->get();
         Commutator::receive(decompose(command.cmd, command.player_id));
-        Commutator::receive(new CreateCoins());
     }
 }
 
+void Game::write(const OutputMessage& msg) {
+    server->write(msg.player_num, msg.msg.c_str());
+}
 
 Message* Game::decompose(std::string raw, int player_id) {
     std::string first_word = get_prefix(raw);
@@ -70,7 +85,7 @@ Message* Game::decompose(std::string raw, int player_id) {
         std::string coords = raw.substr(1);
         return new CreateTrap(type, coords, player_id);
     }
-    return new Message;
+    return new OutputMessage((player_id % 2) + 1, first_word + raw);
 }
 
 
