@@ -1,41 +1,50 @@
 #include "GameStat.h"
-#include "Config.h"
-
 
 GameStat::GameStat() = default;
 
-GameStat* GameStat::get_instance() {
+GameStat* GameStat::GetInstance() {
     if (!instance)
         instance = new GameStat();
     return instance;
 }
 
-TrapsComposer& GameStat::get_traps() {
+TrapsComposer* GameStat::GetTraps() {
     return traps;
 }
 
-CoinsComposer& GameStat::get_coins() {
+CoinsComposer* GameStat::GetCoins() {
     return coins;
 }
 
-GraphsComposer& GameStat::get_graphs() {
+GraphsComposer* GameStat::GetGraphs() {
     return graphs;
 }
 
-UnitsComposer& GameStat::get_units() {
+UnitsComposer* GameStat::GetUnits() {
     return units;
 }
 
-void GameStat::set(Environment* env) {
-    coins.append(env->coins);
-    Config::get_instance()->size = env->size;
+void GameStat::Set(Environment* env) {
+    traps = new TrapsComposer;
+    coins = new CoinsComposer;
+    units = new UnitsComposer;
+    graphs = new GraphsComposer;
+    coins->Append(env->coins);
+    Config::GetInstance()->size = env->size;
     p1 = env->p1;
     p2 = env->p2;
 }
 
-Player* GameStat::get_player(int num) {
+Player* GameStat::GetPlayer(int num) {
     if (num == 1)
         return p1;
     else
         return p2;
+}
+
+Player* GameStat::GetEnemy(Player* player) {
+    if (player == p1) {
+        return p2;
+    }
+    return p1;
 }

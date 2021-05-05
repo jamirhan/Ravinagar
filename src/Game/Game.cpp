@@ -1,79 +1,81 @@
 #include "Game.h"
 
-
-std::string get_prefix(std::string val) {
-    int i = 0;
-    while (val[i] == ' ')
-        ++i;
-    std::string ans;
-    while (i < val.size() && val[i] != ' ') {
-        ans += val[i];
-        ++i;
+template <typename Out>
+void Split(const std::string& s, char sep, Out result) {
+    std::istringstream iss(s);
+    std::string item;
+    while (std::getline(iss, item, sep)) {
+        *result++ = item;
     }
-    return ans;
 }
 
-
-std::string remove_prefix(std::string val) {
-    int i = 0;
-    while (val[i] == ' ')
-        ++i;
-    while (i < val.size() && val[i] != ' ') {
-        ++i;
-    }
-    std::string ans;
-    while (i < val.size()) {
-        ans += val[i];
-        ++i;
-    }
-    return ans;
+std::vector<std::string> Split(const std::string& s, char sep = ';') {
+    std::vector<std::string> res;
+    Split(s, sep, std::back_inserter(res));
+    return res;
 }
 
-
-void Game::start() {
+void Game::Start() {
     runs = true;
-    server = Server::get_instance();
-    create_env();
-    run();
+    server = Server::GetInstance();
+    CreateEnv();
+    Run();
 }
 
-void Game::create_env() {
-    auto env = new Environment(Config::get_instance()->size);
-    Commutator::receive(new EnvMsg(env));
+void Game::CreateEnv() {
+    auto env = new Environment(Config::GetInstance()->size);
+    Commutator::Receive(new EnvMsg(env));
 }
 
 
-void Game::run() {
+void Game::Run() {
     while (runs) {
-        RawCommand command = server->get();
-        Commutator::receive(decompose(command.cmd, command.player_id));
-        Commutator::receive(new CreateCoins());
+        RawCommand command = server->Get();
+        Commutator::Receive(Decompose(command.cmd, command.player_id));
+        Commutator::Receive(new CreateCoins());
+        {
+            server->temp++;
+            server->temp %= 3;
+        }
+
     }
 }
 
 
-Message* Game::decompose(std::string raw, int player_id) {
-    std::string first_word = get_prefix(raw);
-    raw = remove_prefix(raw);
-    if (first_word == "Graph") {
-        auto cmd = new CreateGraph(Poly(raw), player_id);
-        return cmd;
-    } else if (first_word == "Unit") {
-        std::string unit_name = get_prefix(raw);
-        raw = remove_prefix(raw);
-        int graph_num = std::stoi(raw);
-        return new CreateUnit(player_id, graph_num, unit_name);
-    } else if (first_word == "CreationTrap") {
-        std::string type = get_prefix(raw);
-        raw = remove_prefix(raw);
-        std::string coords = raw.substr(1);
-        return new CreateTrap(type, coords, player_id);
+Message* Game::Decompose(std::string raw, int player_id) {
+    std::vector<std::string> tokens = Split(raw);
+    std::string type_command = tokens[0];
+    if (type_command == "CreateGraph") {
+        return new CreateGraph(Poly(tokens[1]), player_id, type_command);
+    } else if (type_command == "CreateUnit") {
+        std::string unit_name = tokens[1];
+        int graph_num = std::stoi(tokens[2]);
+        return new CreateUnit(player_id, graph_num, unit_name, type_command + ';' + unit_name);
+    } else if (type_command == "CreateTrap") {
+        std::string trap_type = tokens[1];
+        int x_coord = std::stoi(tokens[2]);
+        int y_coord = std::stoi(tokens[3]);
+        return new CreateTrap(trap_type, Point(x_coord, y_coord), player_id, type_command + ';' + trap_type);
+    } else if (type_command == "ExitIntoSpace") {
+        int x_coord = std::stoi(tokens[1]);
+        int y_coord = std::stoi(tokens[2]);
+        return new ExitIntoSpaceMsg(Point(x_coord, y_coord), player_id, type_command);
+    } else if (type_command == "Capture") {
+        return new CaptureMsg(Poly(tokens[1]), player_id, type_command);
+    } else if (type_command == "DestroyCapturedGraph") {
+        return new DestroyCapturedGraphMsg(player_id, std::stoi(tokens[1]), type_command);
+    } else if (type_command == "DestroyOwnGraph") {
+        return new DestroyOwnGraphMsg(player_id, std::stoi(tokens[1]), type_command);
+    } else if (type_command == "SayHello") {
+        return new SayHelloMsg(player_id, std::stoi(tokens[1]), type_command);
+    } else if (type_command == "Move") {
+        return new MoveMsg(player_id, std::stoi(tokens[1]), type_command);
     }
-    return new Message;
+    return nullptr;
 }
 
 
-Game* Game::get_instance() {
+Game* Game::GetInstance() {
     if (!instance)
         instance = new Game();
     return instance;

@@ -1,10 +1,10 @@
 #include "Poly.h"
 
 bool is_digit(char a) {
-        if (static_cast<int>(a) >= 48 && static_cast<int>(a) <= 57)
-            return true;
-        else
-            return false;
+    if (static_cast<int>(a) >= 48 && static_cast<int>(a) <= 57)
+        return true;
+    else
+        return false;
 }
 
 Poly::Poly(std::string raw) {
@@ -28,26 +28,22 @@ Poly::Poly(std::string raw) {
         if (i == 'x') {
             is_x = true;
             continue;
-        }
-        else if (i == '^') {
+        } else if (i == '^') {
             is_deg = true;
-        }
-        else if (i == '+') {
+        } else if (i == '+') {
             sign = 1;
             last_space = true;
-        }
-        else if (i == '-') {
+        } else if (i == '-') {
             sign = -1;
             last_space = true;
-        }
-        else if (i == ' ') {
+        } else if (i == ' ') {
             if (last_space)
                 continue;
             last_space = true;
             int coef;
             if (!last_num.empty())
                 coef = std::stoi(last_num);
-            else 
+            else
                 coef = 1;
             int degree;
             if (!deg.empty())
@@ -61,7 +57,7 @@ Poly::Poly(std::string raw) {
 
             if (new_coefs.empty())
                 new_coefs.resize(degree + 1);
-            
+
             new_coefs[degree] = coef * sign;
 
             is_deg = false;
@@ -70,5 +66,7 @@ Poly::Poly(std::string raw) {
             deg = "";
         }
     }
+    poly.data() = new_coefs;
     coefs = new_coefs;
 }
+

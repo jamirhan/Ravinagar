@@ -3,20 +3,20 @@
 #include "MineCreator.h"
 #include "GraphCatcherCreator.h"
 
-TrapsBuilder::TrapsBuilder() = default;
 
-Trap* TrapsBuilder::generate(TrapFactory* trap_factory, const Point& coords, Player* owner) {
-    return trap_factory->Create(coords, owner);
+Trap* TrapsBuilder::Generate(TrapFactory* trap_factory, const Point& coord, Player* owner) {
+    return trap_factory->Create(coord, owner);
 }
 
-Trap* TrapsBuilder::generate(std::string type, const Point& coords, Player *owner) {
+Trap* TrapsBuilder::Generate(std::string type, const Point& coords, Player* owner) {
     if (type == "Clone") {
-        return generate(new CloneCreator(), coords, owner);
+        return Generate(new CloneCreator(), coords, owner);
     } else if (type == "GraphCatcher") {
-        return generate(new GraphCatcherCreator(), coords, owner);
+        return Generate(new GraphCatcherCreator(), coords, owner);
     } else if (type == "Mine") {
-        return generate(new MineCreator(), coords, owner);
+        return Generate(new MineCreator(), coords, owner);
     } else {
         //TODO
     }
+    return nullptr;
 }

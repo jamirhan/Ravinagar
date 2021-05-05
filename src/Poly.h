@@ -1,11 +1,17 @@
 #pragma once
+
 #include <string>
 #include <vector>
 #include "Point.h"
+#include <boost/math/tools/polynomial.hpp>
+#include "../Game/Config.h"
+
+using namespace boost::math::tools;
 
 
-class Poly {
+struct Poly {
     std::vector<int> coefs;
-public:
+    polynomial<int> poly;
+
     Poly(std::string);
 };

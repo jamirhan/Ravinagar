@@ -1,13 +1,20 @@
 #pragma once
+
 #include "Point.h"
 #include <random>
 
 class Coin {
 protected:
     int val;
-    Point cords;
+    Point coords;
+
+    Coin(int val, Point coords);
+
 public:
-    int get_val();
-    Point get_cords();
+
+    int GetVal();
+
+    Point GetCords();
+
     virtual ~Coin();
 };

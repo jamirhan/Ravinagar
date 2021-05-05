@@ -1,14 +1,30 @@
 #pragma once
+
 #include "Point.h"
 #include <deque>
 
 
 class Player {
-    Point cords;
+    Point coord;
+    bool moved = false;
+public:
+    bool IsMoved() const;
+
+    void Move();
+
+public:
+    const Point& GetCoord() const;
+
+private:
     int points = 0;
 public:
+    int GetPoints() const;
+
     Player() = delete;
+
     Player(int, int);
-    void update_coins(int);
-    void move(Point);
+
+    void UpdateCoins(int);
+
+    void Move(Point);
 };

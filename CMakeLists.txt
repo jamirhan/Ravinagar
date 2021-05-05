@@ -4,7 +4,7 @@ project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -Wall -Wextra")
+#Set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O2 -Wall -Wextra")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
@@ -24,9 +24,6 @@ set(HEADERS src/Environment.h
         src/Traps/Builder/CloneCreator.h
         src/Traps/Builder/GraphCatcherCreator.h
         src/Traps/Builder/MineCreator.h
-        src/Traps/Types/Clone.h
-        src/Traps/Types/GraphCatcher.h
-        src/Traps/Types/Mine.h
         src/Coins/Coin.h
         src/Player.h
         src/Server.h
@@ -73,9 +70,6 @@ set(SOURCES
         src/Traps/Builder/CloneCreator.cpp
         src/Traps/Builder/GraphCatcherCreator.cpp
         src/Traps/Builder/MineCreator.cpp
-        src/Traps/Types/Clone.cpp
-        src/Traps/Types/GraphCatcher.cpp
-        src/Traps/Types/Mine.cpp
         src/Units/UnitsComposer.cpp
         src/Units/Unit.cpp
         )
@@ -89,4 +83,25 @@ include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Units
 )
 
+include_directories("root_finder")
+
+set(BOOST_ROOT boost_1_76_0)
+set(Boost_USE_STATIC_LIBS        ON)
+set(Boost_USE_MULTITHREADED      ON)
+set(Boost_USE_STATIC_RUNTIME    OFF)
+set(GSL_ROOT_DIR "gsl-2.6")
+find_package(Boost 1.76.0 REQUIRED)
+#find_package(GSL REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+#include_directories(${GSL_INCLUDE_DIR})
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} src/main.cpp)
+#target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} GSL::gsl GSL::gslcblas)
+
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+
+
+#if(Boost_FOUND)
+#    include_directories(${Boost_INCLUDE_DIRS})
+#    add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} src/main.cpp)
+#    target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+#endif()
