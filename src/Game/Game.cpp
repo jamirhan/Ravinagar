@@ -15,9 +15,18 @@ std::vector<std::string> Split(const std::string& s, char sep = ';') {
     return res;
 }
 
-void Game::Start() {
+bool Game::set_config(const QHostAddress &addr, quint16 port) {
+    Server::set_addr(addr, port);
+    server = Server::get_instance();
+    if (!server->is_running()) {
+        runs = false;
+        return false;
+    }
     runs = true;
-    server = Server::GetInstance();
+    return true;
+}
+
+void Game::Start() {
     CreateEnv();
     Run();
 }
@@ -30,14 +39,9 @@ void Game::CreateEnv() {
 
 void Game::Run() {
     while (runs) {
-        RawCommand command = server->Get();
+        RawCommand command = server->get();
         Commutator::Receive(Decompose(command.cmd, command.player_id));
         Commutator::Receive(new CreateCoins());
-        {
-            server->temp++;
-            server->temp %= 3;
-        }
-        GameStat::GetInstance()->GetGraphs()->GetPlayerGraphNum(GameStat::GetInstance()->GetPlayer(1), 1)->Distance({1, 1});
     }
 }
 
@@ -74,6 +78,9 @@ Message* Game::Decompose(std::string raw, int player_id) {
     return nullptr;
 }
 
+void Game::write(const PrintMsg& msg) {
+    server->write(GameStat::GetInstance()->get_player_num(msg.player), msg.msg.c_str());
+}
 
 Game* Game::GetInstance() {
     if (!instance)

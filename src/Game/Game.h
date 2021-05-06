@@ -7,10 +7,15 @@
 #include "../Commutator.h"
 #include "../Message.h"
 #include <string>
+#include <QUdpSocket>
+#include <QDtls>
+#include <QtNetwork>
 
 class Message;
 
 class Server;
+
+class PrintMsg;
 
 class Game {
     inline static Game* instance;
@@ -18,7 +23,6 @@ class Game {
     Server* server;
 
     void Run();
-
     static void CreateEnv();
 
     Game() = default;
@@ -31,6 +35,10 @@ public:
 
     static Game* GetInstance();
 
+    bool set_config(const QHostAddress& addr, quint16 port);
+
     [[maybe_unused]] void Start();
+
+    void write(const PrintMsg& msg);
 
 };
