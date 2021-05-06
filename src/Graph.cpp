@@ -25,17 +25,25 @@ double Graph::Distance(Point coord) {
 
     double eps = 1e-5;
     double l = 0;
-    double r = Config::size;
-    return rand() % 3;
-//    auto t = Eigen::VectorXd(tmp.data().begin(), tmp.data().end());
-//    std::set<double> roots = RootFinder::solvePolynomial(t, l, r, 1e-8);
-//
-//    double min_dist = Config::size;
-//
-//    for (auto root : roots) {
-//        min_dist = std::min(min_dist, pr.evaluate(root));
-//    }
-//    return sqrt(min_dist);
+    double r = Config::size * Config::size;
+    tmp.data() = {-5, 0, 5, 3};
+    Eigen::VectorXd v(tmp.data().size());
+    std::reverse(tmp.data().begin(), tmp.data().end());
+    for (int i = 0; i < tmp.data().size(); ++i) {
+        v[i] = tmp.data()[i];
+    }
+    std::set<double> roots;
+    for (int i = 0; i < 300000; i++)
+    {
+        roots = RootFinder::solvePolynomial(v, l, r, 1e-8);
+    }
+
+    double min_dist = Config::size;
+
+    for (auto root : roots) {
+        min_dist = std::min(min_dist, pr.evaluate(root));
+    }
+    return sqrt(min_dist);
 }
 
 Player* Graph::GetOwner() {

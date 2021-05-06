@@ -37,7 +37,7 @@ void Game::Run() {
             server->temp++;
             server->temp %= 3;
         }
-
+        GameStat::GetInstance()->GetGraphs()->GetPlayerGraphNum(GameStat::GetInstance()->GetPlayer(1), 1)->Distance({1, 1});
     }
 }
 
