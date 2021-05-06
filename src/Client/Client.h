@@ -11,7 +11,7 @@ public slots:
     void pskRequired(QSslPreSharedKeyAuthenticator *auth);
 };
 
-class Client: public QObject {
+class Client {
     std::thread game_thread;
     QHostAddress server_addr;
     quint16 server_port = 0;
@@ -42,4 +42,6 @@ class Client: public QObject {
 public:
     Client();
     void run();
+public slots:
+    void timeout();
 };

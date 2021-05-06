@@ -24,14 +24,14 @@ void Server::set_client(QHostAddress addr, quint16 port) {
     if (!client_1) {
         client_1 = new QDtls(QSslSocket::SslServerMode);
         client_1->setDtlsConfiguration(server_config);
-        QDtls::connect(client_1, &QDtls::pskRequired, &handler, &AuthHandler::pskRequired);
         client_1->setPeer(addr, port);
+        QDtls::connect(client_1, &QDtls::pskRequired, &handler, &AuthHandler::pskRequired);
     }
     else {
         client_2 = new QDtls(QSslSocket::SslServerMode);
         client_2->setDtlsConfiguration(server_config);
-        QDtls::connect(client_2, &QDtls::pskRequired, &handler, &AuthHandler::pskRequired);
         client_2->setPeer(addr, port);
+        QDtls::connect(client_2, &QDtls::pskRequired, &handler, &AuthHandler::pskRequired);
     }
 }
 
@@ -88,11 +88,17 @@ void Server::start() {
     wait_two_connections();
 }
 
+void Server::timeout() {
+
+}
+
 void Server::wait_two_connections() {
     QByteArray datagram;
     QHostAddress addr;
     quint16 port = 0;
     QDtls* cur_client;
+//    connect(cur_client, SIGNAL(QDtls::timeout()), this, SLOT(started()));
+//    connect(&m_myTimer, SIGNAL(timeout()), this, SLOT(timeout()));
     while(udpSocket->waitForReadyRead(-1)) {
         while (udpSocket->hasPendingDatagrams()) {
             datagram = QByteArray(udpSocket->pendingDatagramSize(), Qt::Uninitialized);

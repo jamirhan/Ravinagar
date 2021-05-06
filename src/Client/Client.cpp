@@ -52,10 +52,14 @@ void Client::connect(const QHostAddress& server_address, quint16 s_port) {
     QByteArray server_hello;
 
     //while (!client_socket.hasPendingDatagrams()) {
+//    QDtls::connect(&server_dtls, &QDtls::handshakeTimeout, this, &Client::timeout);
+//    connect(&client_socket, &QAbstractSocket::connected, this, &DtlsAssociation::udpSocketConnected);
+//    connect(&pingTimer, &QTimer::timeout, this, &DtlsAssociation::pingTimeout);
         server_dtls.doHandshake(&client_socket);
         //usleep(5000000);
     //}
     ClientAuthHandler h;
+
     QDtls::connect(&server_dtls, &QDtls::pskRequired, &h, &ClientAuthHandler::pskRequired);
     while (server_dtls.handshakeState() != QDtls::HandshakeComplete) {
         while (client_socket.hasPendingDatagrams()) {
@@ -67,6 +71,11 @@ void Client::connect(const QHostAddress& server_address, quint16 s_port) {
         }
     }
     to_console("connection established.\n");
+}
+
+void Client::timeout() {
+    to_console("Timeout.");
+    throw std::invalid_argument("timeout");
 }
 
 QString Client::from_console() {
@@ -197,6 +206,7 @@ int Client::stage_2() {
 int Client::stage_5() {
     to_console("So now I will try to connect to the server with the provided address\n");
     try {
+        client_socket.disconnectFromHost();
         usleep(5000000); // 5 secs to raise server
         connect(server_addr, server_port);
     } catch (const BadConnection&) {

@@ -15,7 +15,7 @@ public slots:
 struct RawCommand;
 
 
-class Server {
+class Server: QObject {
     QUdpSocket* udpSocket;
     QDtls* client_1 = nullptr;
     QDtls* client_2 = nullptr;
@@ -42,4 +42,6 @@ public:
     RawCommand get();
     bool is_running();
     void write(int player_num, QString msg);
+public slots:
+    void timeout();
 };

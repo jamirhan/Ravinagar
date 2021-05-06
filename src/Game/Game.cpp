@@ -38,6 +38,7 @@ void Game::CreateEnv() {
 
 
 void Game::Run() {
+    server->start();
     while (runs) {
         RawCommand command = server->get();
         Commutator::Receive(Decompose(command.cmd, command.player_id));
