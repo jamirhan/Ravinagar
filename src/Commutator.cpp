@@ -167,7 +167,6 @@ void Commutator::Receive(Message* message) {
         auto* msg = dynamic_cast<PrintMsg*>(message);
         Game::GetInstance()->write(*msg);
     }
-
 }
 
 

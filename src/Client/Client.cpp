@@ -80,17 +80,30 @@ void Client::timeout() {
 
 QString Client::from_console() {
     std::string result;
-    std::cin >> result;
-    std::string without_spaces;
-    for (auto && i : result) {
-        if (i != ' ')
-            without_spaces += i;
+    std::getline( std::cin, result);
+//    std::string without_spaces;
+//    for (auto && i : result) {
+//        if (i != ' ')
+//            without_spaces += i;
+//    }
+    return result.c_str();
+}
+
+QString remove_spaces(const QString& obj) {
+    QString result = "";
+    for (auto el: obj) {
+        if (el != ' ')
+            result += el;
+        else
+            result += ';';
     }
-    return without_spaces.c_str();
+    return result;
 }
 
 void Client::send(const QString& msg) {
-    QByteArray in_byte = msg.toUtf8();
+//    to_console(msg);
+//    std::string res = msg.toStdString();
+    QByteArray in_byte = remove_spaces(msg).toUtf8();
     server_dtls.writeDatagramEncrypted(&client_socket, in_byte);
 }
 
@@ -206,10 +219,10 @@ int Client::stage_2() {
 int Client::stage_5() {
     to_console("So now I will try to connect to the server with the provided address\n");
     try {
-        client_socket.disconnectFromHost();
         usleep(5000000); // 5 secs to raise server
         connect(server_addr, server_port);
     } catch (const BadConnection&) {
+        client_socket.disconnectFromHost();
         to_console("so connection was not successful, probably you have missed something, try again\n");
         return 2;
     }

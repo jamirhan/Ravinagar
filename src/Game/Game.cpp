@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 template <typename Out>
 void Split(const std::string& s, char sep, Out result) {
     std::istringstream iss(s);
@@ -39,16 +40,32 @@ void Game::CreateEnv() {
 
 void Game::Run() {
     server->start();
+    Commutator::Receive(new PrintMsg("Your position is " +
+    GameStat::GetInstance()->GetPlayer(1)->GetCoord().CoordPointFormat(), GameStat::GetInstance()->GetPlayer(1)));
+    Commutator::Receive(new PrintMsg("Your position is " +
+                                     GameStat::GetInstance()->GetPlayer(2)->GetCoord().CoordPointFormat(), GameStat::GetInstance()->GetPlayer(2)));
     while (runs) {
         RawCommand command = server->get();
-        Commutator::Receive(Decompose(command.cmd, command.player_id));
-        Commutator::Receive(new CreateCoins());
+        try {
+            Commutator::Receive(Decompose(command.cmd, command.player_id));
+            Commutator::Receive(new CreateCoins());
+        } catch (const EmptyCommand&) {
+
+        }
+        catch (const BadGraph&) {
+            Commutator::Receive(new PrintMsg("Bad graph", GameStat::GetInstance()->GetPlayer(command.player_id)));
+        }
+        catch (...) {
+            Commutator::Receive(new PrintMsg("Unresolved Error occured", GameStat::GetInstance()->GetPlayer(command.player_id)));
+        }
     }
 }
 
 
 Message* Game::Decompose(std::string raw, int player_id) {
     std::vector<std::string> tokens = Split(raw);
+    if (tokens.size() == 0)
+        throw EmptyCommand();
     std::string type_command = tokens[0];
     if (type_command == "CreateGraph") {
         return new CreateGraph(Poly(tokens[1]), player_id, type_command);

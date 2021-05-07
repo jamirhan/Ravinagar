@@ -97,8 +97,6 @@ void Server::wait_two_connections() {
     QHostAddress addr;
     quint16 port = 0;
     QDtls* cur_client;
-//    connect(cur_client, SIGNAL(QDtls::timeout()), this, SLOT(started()));
-//    connect(&m_myTimer, SIGNAL(timeout()), this, SLOT(timeout()));
     while(udpSocket->waitForReadyRead(-1)) {
         while (udpSocket->hasPendingDatagrams()) {
             datagram = QByteArray(udpSocket->pendingDatagramSize(), Qt::Uninitialized);
@@ -112,14 +110,13 @@ void Server::wait_two_connections() {
                 cur_client->doHandshake(udpSocket, datagram);
             }
         }
+        usleep(2000000);
         if (completed()) {
-            std::cout << 23;
             write_message(client_1, "successful connection.");
             write_message(client_2, "successful connection.");
             break;
         }
     }
-    std::cout << 34;
 }
 
 void Server::set_addr(QHostAddress addr, quint16 port) {

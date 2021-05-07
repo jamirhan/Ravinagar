@@ -6,6 +6,14 @@
 #include <boost/math/tools/polynomial.hpp>
 #include "../Game/Config.h"
 
+struct EmptyCommand: std::exception {
+
+};
+
+struct BadGraph: std::exception {
+
+};
+
 using namespace boost::math::tools;
 
 
