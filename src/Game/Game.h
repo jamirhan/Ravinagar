@@ -32,5 +32,4 @@ public:
     static Game* GetInstance();
 
     [[maybe_unused]] void Start();
-
 };

@@ -12,7 +12,8 @@ public:
     inline static int kAmountCreatedAntiCoins;
     inline static int kAmountCreatedClassicCoins;
     inline static int kAmountCreatedSuperCoins;
-    inline static int kMaxAmountOwnGraphs = 8;
+    inline static int kMaxAmountOwnGraphs = 5;
+//    inline static int kMaxAmountCapturedGraphs = 3;
 
     inline static std::map<std::string, int> kRequestCosts = {
             {"ExitIntoSpace",           5},

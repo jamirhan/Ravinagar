@@ -17,5 +17,7 @@ public:
 
     Graph* GetCapturedGraphNum(Player* player, int graph_num);
 
+    int GetAmountOwnGraphs(Player*);
 
+    int GetAmountCapturedGraphs(Player*);
 };

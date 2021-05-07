@@ -12,21 +12,20 @@ bool Graph::IncludesPoint(Point) {
 }
 
 double Graph::Distance(Point coord) {
+    coord = {0, 9};
     polynomial<int> a = polynomial{0, 1} - polynomial{coord.x};
     polynomial<int> b = polynom.poly - polynomial{coord.y};
     polynomial<double> pr = a * a + b * b;
     polynomial<double> tmp = pr;
     tmp.data().erase(tmp.data().begin());
-
     // Поиск производной.
     for (int i = 0; i < tmp.degree(); ++i) {
         tmp[i] *= i + 1;
     }
 
     double eps = 1e-5;
-    double l = 0;
-    double r = Config::size * Config::size;
-    tmp.data() = {-5, 0, 5, 3};
+    double l = -eps;
+    double r = r + eps;
     Eigen::VectorXd v(tmp.data().size());
     std::reverse(tmp.data().begin(), tmp.data().end());
     for (int i = 0; i < tmp.data().size(); ++i) {
@@ -35,10 +34,10 @@ double Graph::Distance(Point coord) {
     std::set<double> roots;
     for (int i = 0; i < 300000; i++)
     {
-        roots = RootFinder::solvePolynomial(v, l, r, 1e-8);
+        roots = RootFinder::solvePolynomial(v, l - eps, r + eps, 1e-8);
     }
 
-    double min_dist = Config::size;
+    double min_dist = Config::size * Config::size;
 
     for (auto root : roots) {
         min_dist = std::min(min_dist, pr.evaluate(root));

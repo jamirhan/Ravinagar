@@ -2,7 +2,7 @@
 
 RawCommand Server::Get() {
     if (temp == 0) {
-        return RawCommand("CreateGraph;x^5 + x^2 - 2x + 1", 1);
+        return RawCommand("CreateGraph;x^2 + 2x + 9", 1);
     } else if (temp == 1) {
         return RawCommand("CreateUnit;Spy;1;OnOwn", 1);
     } else if (temp == 2) {

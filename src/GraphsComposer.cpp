@@ -50,3 +50,25 @@ void GraphsComposer::RemoveGraph(Graph* graph) {
     auto it = std::find(graphs.begin(), graphs.end(), graph);
     graphs.erase(it);
 }
+
+int GraphsComposer::GetAmountOwnGraphs(Player* player) {
+    int res = 0;
+    for (auto graph : graphs) {
+        if (graph->GetOwner() == player) {
+            res++;
+        }
+    }
+    return res;
+}
+
+int GraphsComposer::GetAmountCapturedGraphs(Player* player) {
+    int res = 0;
+    for (auto graph : graphs) {
+        if (graph->GetOwner() != player && graph->IsCaptured()) {
+            res++;
+        }
+    }
+    return res;
+}
+
+

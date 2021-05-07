@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 template <typename Out>
 void Split(const std::string& s, char sep, Out result) {
@@ -37,7 +38,7 @@ void Game::Run() {
             server->temp++;
             server->temp %= 3;
         }
-        GameStat::GetInstance()->GetGraphs()->GetPlayerGraphNum(GameStat::GetInstance()->GetPlayer(1), 1)->Distance({1, 1});
+//        std::cout << GameStat::GetInstance()->GetGraphs()->GetPlayerGraphNum(GameStat::GetInstance()->GetPlayer(1), 1)->Distance({0, 9});
     }
 }
 

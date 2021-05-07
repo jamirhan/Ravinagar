@@ -8,7 +8,6 @@
 
 using namespace boost::math::tools;
 
-
 struct Poly {
     std::vector<int> coefs;
     polynomial<int> poly;

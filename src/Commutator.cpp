@@ -23,8 +23,12 @@ void Commutator::Receive(Message* message) {
         Player* cur_player = GameStat::GetInstance()->GetPlayer(msg->player_id);
         Graph* new_graph;
         new_graph = new Graph(msg->polynom, cur_player);
-        if (new_graph->Distance(cur_player->GetCoord()) > Config::kEps) {
+        if (new_graph->Distance(cur_player->GetCoord()) >= Config::kEps) {
             Receive(new PrintMsg("Ваша позиция должна принадлежать графику функции!", cur_player));
+            return;
+        }
+        if (GameStat::GetInstance()->GetGraphs()->GetAmountOwnGraphs(cur_player) > Config::kMaxAmountOwnGraphs) {
+            Receive(new PrintMsg("У вас создано слишком много графиков", cur_player));
             return;
         }
         if (!Buy("У вас не хвает монет для создания графа", msg->request, cur_player)) {
@@ -90,6 +94,7 @@ void Commutator::Receive(Message* message) {
             Receive(new PrintMsg("Поздравляем, вы выиграли!", cur_player));
             Receive(new PrintMsg("Вы проиграли!", enemy));
             Receive(new EndMsg());
+            return;
         }
     } else if (dynamic_cast<CaptureMsg*>(message)) {
         auto* msg = dynamic_cast<CaptureMsg*>(message);
@@ -101,6 +106,8 @@ void Commutator::Receive(Message* message) {
         }
         if (GameStat::GetInstance()->GetGraphs()->Capture(captured_graph)) {
             Receive(new PrintMsg("Вы успешно захватили граф", cur_player));
+        } else {
+            Receive(new PrintMsg("Вы не захватили граф", cur_player));
         }
     } else if (dynamic_cast<DestroyCapturedGraphMsg*>(message)) {
         auto* msg = dynamic_cast<DestroyCapturedGraphMsg*>(message);
