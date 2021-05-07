@@ -46,6 +46,8 @@ public:
 
     UnitsComposer* GetUnits();
 
+    int get_player_num(Player* p);
+
     static GameStat* GetInstance();
 
     void Set(Environment* env);

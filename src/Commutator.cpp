@@ -170,6 +170,10 @@ void Commutator::Receive(Message* message) {
         Point new_coord = affected_points[rand() % affected_points.size()];
         cur_player->Move(new_coord);
     }
+    else if (dynamic_cast<PrintMsg*>(message)){
+        auto* msg = dynamic_cast<PrintMsg*>(message);
+        Game::GetInstance()->write(*msg);
+    }
 }
 
 

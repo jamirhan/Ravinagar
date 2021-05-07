@@ -35,6 +35,11 @@ void GameStat::Set(Environment* env) {
     p2 = env->p2;
 }
 
+int GameStat::get_player_num(Player* p) {
+    if (p == GetPlayer(1)) return 1;
+    else return 2;
+}
+
 Player* GameStat::GetPlayer(int num) {
     if (num == 1)
         return p1;

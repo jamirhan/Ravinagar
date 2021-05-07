@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <iostream>
 
+
 template <typename Out>
 void Split(const std::string& s, char sep, Out result) {
     std::istringstream iss(s);
@@ -16,9 +17,18 @@ std::vector<std::string> Split(const std::string& s, char sep = ';') {
     return res;
 }
 
-void Game::Start() {
+bool Game::set_config(const QHostAddress &addr, quint16 port) {
+    Server::set_addr(addr, port);
+    server = Server::get_instance();
+    if (!server->is_running()) {
+        runs = false;
+        return false;
+    }
     runs = true;
-    server = Server::GetInstance();
+    return true;
+}
+
+void Game::Start() {
     CreateEnv();
     Run();
 }
@@ -30,21 +40,33 @@ void Game::CreateEnv() {
 
 
 void Game::Run() {
+    server->start();
+    Commutator::Receive(new PrintMsg("Your position is " +
+    GameStat::GetInstance()->GetPlayer(1)->GetCoord().CoordPointFormat(), GameStat::GetInstance()->GetPlayer(1)));
+    Commutator::Receive(new PrintMsg("Your position is " +
+                                     GameStat::GetInstance()->GetPlayer(2)->GetCoord().CoordPointFormat(), GameStat::GetInstance()->GetPlayer(2)));
     while (runs) {
-        RawCommand command = server->Get();
-        Commutator::Receive(Decompose(command.cmd, command.player_id));
-        Commutator::Receive(new CreateCoins());
-        {
-            server->temp++;
-            server->temp %= 3;
+        RawCommand command = server->get();
+        try {
+            Commutator::Receive(Decompose(command.cmd, command.player_id));
+            Commutator::Receive(new CreateCoins());
+        } catch (const EmptyCommand&) {
+
         }
-//        std::cout << GameStat::GetInstance()->GetGraphs()->GetPlayerGraphNum(GameStat::GetInstance()->GetPlayer(1), 1)->Distance({0, 9});
+        catch (const BadGraph&) {
+            Commutator::Receive(new PrintMsg("Bad graph", GameStat::GetInstance()->GetPlayer(command.player_id)));
+        }
+        catch (...) {
+            Commutator::Receive(new PrintMsg("Unresolved Error occured", GameStat::GetInstance()->GetPlayer(command.player_id)));
+        }
     }
 }
 
 
 Message* Game::Decompose(std::string raw, int player_id) {
     std::vector<std::string> tokens = Split(raw);
+    if (tokens.size() == 0)
+        throw EmptyCommand();
     std::string type_command = tokens[0];
     if (type_command == "CreateGraph") {
         return new CreateGraph(Poly(tokens[1]), player_id, type_command);
@@ -75,6 +97,9 @@ Message* Game::Decompose(std::string raw, int player_id) {
     return nullptr;
 }
 
+void Game::write(const PrintMsg& msg) {
+    server->write(GameStat::GetInstance()->get_player_num(msg.player), msg.msg.c_str());
+}
 
 Game* Game::GetInstance() {
     if (!instance)
