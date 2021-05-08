@@ -1,11 +1,13 @@
 #include "Coin.h"
 
-int Coin::get_val() {
+int Coin::GetVal() {
     return val;
 }
 
+Coin::Coin(int val, Point coord) : val(val), coords(coord) {}
+
 Coin::~Coin() = default;
 
-Point Coin::get_cords() {
-    return cords;
+Point Coin::GetCords() {
+    return coords;
 }

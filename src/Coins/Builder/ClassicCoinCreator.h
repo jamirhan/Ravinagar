@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Coin.h"
 #include "CoinsFactory.h"
 

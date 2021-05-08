@@ -1,6 +1,3 @@
 #include "ClassicCoin.h"
 
-ClassicCoin::ClassicCoin(Point cords) {
-    val = (5 + (rand() % 5)) % 5;
-    this->cords = cords;
-}
+ClassicCoin::ClassicCoin(Point coord) : Coin((5 + (rand() % 5)) % 5, coord) {}
