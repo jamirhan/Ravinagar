@@ -3,22 +3,42 @@
 
 TrapsComposer::TrapsComposer() = default;
 
-TrapsComposer::TrapsComposer(std::deque<Trap*>& ar): traps(ar) {}
+TrapsComposer::TrapsComposer(std::deque<Trap*>& ar) : traps(ar) {}
 
-void TrapsComposer::add_trap(Trap* new_trap) {
+void TrapsComposer::AddTrap(Trap* new_trap) {
     traps.push_back(new_trap);
 }
 
-void TrapsComposer::check(Graph* graph) {
+void TrapsComposer::Check(Graph* graph) {
     for (auto trap: traps) {
-        trap->check(graph);
+        if (trap->GetOwner() != graph->GetOwner() && graph->Distance(trap->GetCoord()) < Config::kEps) {
+            trap->Check(graph);
+        }
     }
 }
 
-void TrapsComposer::remove_trap(Trap* to_remove) {
+void TrapsComposer::Check(Unit* unit) {
+    for (auto trap: traps) {
+        if (trap->GetOwner() != unit->GetGraph()->GetOwner() &&
+            unit->GetGraph()->Distance(trap->GetCoord()) < Config::kEps) {
+            trap->Check(unit);
+        }
+    }
+}
+
+void TrapsComposer::RemoveTrap(Trap* to_remove) {
     for (auto trap = traps.begin(); trap != traps.end(); ++trap) {
         if (*trap == to_remove) {
             traps.erase(trap);
+        }
+    }
+}
+
+void TrapsComposer::Search(Unit* unit) {
+    for (auto trap : traps) {
+        if (trap->GetOwner() != unit->GetGraph()->GetOwner() &&
+            unit->GetGraph()->Distance(trap->GetCoord()) < Config::kEps) {
+            unit->Check(trap);
         }
     }
 }

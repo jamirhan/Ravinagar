@@ -2,12 +2,12 @@
 
 Config::Config() {
     int amountCreatedCoins = size;
-    Config::amountCreatedClassicCoins = (amountCreatedCoins + 1) / 2;
-    Config::amountCreatedAntiCoins = (amountCreatedCoins + 3) / 4;
-    Config::amountCreatedSuperCoins = (amountCreatedCoins + 3) / 4;
+    Config::kAmountCreatedClassicCoins = (amountCreatedCoins + 1) / 2;
+    Config::kAmountCreatedAntiCoins = (amountCreatedCoins + 3) / 4;
+    Config::kAmountCreatedSuperCoins = (amountCreatedCoins + 3) / 4;
 }
 
-Config * Config::get_instance() {
+Config* Config::GetInstance() {
     if (!instance) {
         instance = new Config();
     }

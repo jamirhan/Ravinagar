@@ -1,4 +1,5 @@
 #pragma once
+
 #include <deque>
 #include "Coin.h"
 #include "CoinsFactory.h"
@@ -8,11 +9,17 @@
 
 class CoinsBuilder {
     std::deque<Coin*> coins;
-    void generate(int, CoinsFactory*);
+
+    void Generate(int num, CoinsFactory* coin_factory);
+
 public:
     CoinsBuilder() = default;
-    CoinsBuilder* set_AntiCoin(int);
-    CoinsBuilder* set_ClassicCoin(int);
-    CoinsBuilder* set_SuperCoin(int);
-    std::deque<Coin*> get_result();
+
+    CoinsBuilder* SetAntiCoin(int);
+
+    CoinsBuilder* SetClassicCoin(int);
+
+    CoinsBuilder* SetSuperCoin(int);
+
+    std::deque<Coin*> GetResult();
 };

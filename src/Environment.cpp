@@ -1,30 +1,29 @@
 #include "Environment.h"
 
-
 Environment::Environment(int size) {
     this->size = size;
-    make_coins();
-    set_players();
+    MakeCoins();
+    SetPlayers();
 }
 
-void Environment::make_coins() {
+void Environment::MakeCoins() {
     int a_c = 10;
     int c_c = 20;
     int s_c = 10;
     CoinsBuilder* cb = new CoinsBuilder();
-    cb->set_AntiCoin(a_c)->set_ClassicCoin(c_c)->set_SuperCoin(s_c);
-    coins = cb->get_result();
+    cb->SetAntiCoin(a_c)->SetAntiCoin(c_c)->SetAntiCoin(s_c);
+    coins = cb->GetResult();
 }
 
-void Environment::set_players() {
-    p1 = set_player();
-    p2 = set_player();
+void Environment::SetPlayers() {
+    p1 = SetPlayer();
+    p2 = SetPlayer();
 }
 
-Player* Environment::set_player() {
+Player* Environment::SetPlayer() {
     int x_cord = (size + (rand() % size)) % size;
     int y_cord = (size + (rand() % size)) % size;
     Player* player = new Player(x_cord, y_cord);
-    player->update_coins(initial_player_coins);
+    player->UpdateCoins(initial_player_coins);
     return player;
 }

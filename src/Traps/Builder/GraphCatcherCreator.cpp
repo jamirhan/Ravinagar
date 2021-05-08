@@ -1,5 +1,5 @@
 #include "GraphCatcherCreator.h"
 
-Trap * GraphCatcherCreator::Create(const Point& coords, Player* owner) const {
-    return new GraphCatcher(coords, owner);
+Trap* GraphCatcherCreator::Create(const Point& coord, Player* owner) const {
+    return new GraphCatcher(coord, owner);
 }

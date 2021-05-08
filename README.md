@@ -42,3 +42,5 @@
         2) Создания графа игроком
         3) Создание сущности игроком
         4) Создание ловушек игроком
+# Нововведения в checkpoint_3
+    Added server and client support, game actions, executable file to download and run game
