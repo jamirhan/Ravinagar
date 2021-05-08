@@ -1,32 +1,52 @@
 #pragma once
+
 #include <random>
+#include "../Server.h"
 #include "Builder/CoinsBuilder.h"
 #include "Config.h"
 #include "../Commutator.h"
 #include "../Message.h"
-#include "../Server.h"
 #include <string>
+#include <QUdpSocket>
+#include <QDtls>
+#include <QtNetwork>
 
+class Message;
+
+class Server;
+
+class PrintMsg;
 
 class Game {
     inline static Game* instance;
     bool runs = false;
     Server* server;
 
-    void run();
-    static void create_env();
+    void Run();
+    static void CreateEnv();
+
     Game() = default;
-    static Message* decompose(std::string, int);
-    void end();
+
+    static Message* Decompose(std::string raw, int player_id);
+
+    void End();
 
 public:
 
-    static Game* get_instance();
+    static Game* GetInstance();
 
+    bool set_config(const QHostAddress& addr, quint16 port);
+
+    [[maybe_unused]] void Start();
+
+<<<<<<< HEAD
     void start();
 
     bool set_config(const QHostAddress& addr, quint16 port);
 
     void write(const OutputMessage& msg);
+=======
+    void write(const PrintMsg& msg);
+>>>>>>> dev_2
 
 };

@@ -1,6 +1,3 @@
 #include "AntiCoin.h"
 
-AntiCoin::AntiCoin(Point cords) {
-    val = -(rand() % 5);
-    this->cords = cords;
-}
+AntiCoin::AntiCoin(Point coord) : Coin(-rand() % 5, coord) {}

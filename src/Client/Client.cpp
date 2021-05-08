@@ -52,10 +52,20 @@ void Client::connect(const QHostAddress& server_address, quint16 s_port) {
     QByteArray server_hello;
 
     //while (!client_socket.hasPendingDatagrams()) {
+<<<<<<< HEAD
+=======
+//    QDtls::connect(&server_dtls, &QDtls::handshakeTimeout, this, &Client::timeout);
+//    connect(&client_socket, &QAbstractSocket::connected, this, &DtlsAssociation::udpSocketConnected);
+//    connect(&pingTimer, &QTimer::timeout, this, &DtlsAssociation::pingTimeout);
+>>>>>>> dev_2
         server_dtls.doHandshake(&client_socket);
         //usleep(5000000);
     //}
     ClientAuthHandler h;
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev_2
     QDtls::connect(&server_dtls, &QDtls::pskRequired, &h, &ClientAuthHandler::pskRequired);
     while (server_dtls.handshakeState() != QDtls::HandshakeComplete) {
         while (client_socket.hasPendingDatagrams()) {
@@ -69,6 +79,7 @@ void Client::connect(const QHostAddress& server_address, quint16 s_port) {
     to_console("connection established.\n");
 }
 
+<<<<<<< HEAD
 QString Client::from_console() {
     std::string result;
     std::cin >> result;
@@ -82,6 +93,39 @@ QString Client::from_console() {
 
 void Client::send(const QString& msg) {
     QByteArray in_byte = msg.toUtf8();
+=======
+void Client::timeout() {
+    to_console("Timeout.");
+    throw std::invalid_argument("timeout");
+}
+
+QString Client::from_console() {
+    std::string result;
+    std::getline( std::cin, result);
+//    std::string without_spaces;
+//    for (auto && i : result) {
+//        if (i != ' ')
+//            without_spaces += i;
+//    }
+    return result.c_str();
+}
+
+QString remove_spaces(const QString& obj) {
+    QString result = "";
+    for (auto el: obj) {
+        if (el != ' ')
+            result += el;
+        else
+            result += ';';
+    }
+    return result;
+}
+
+void Client::send(const QString& msg) {
+//    to_console(msg);
+//    std::string res = msg.toStdString();
+    QByteArray in_byte = remove_spaces(msg).toUtf8();
+>>>>>>> dev_2
     server_dtls.writeDatagramEncrypted(&client_socket, in_byte);
 }
 
@@ -200,6 +244,10 @@ int Client::stage_5() {
         usleep(5000000); // 5 secs to raise server
         connect(server_addr, server_port);
     } catch (const BadConnection&) {
+<<<<<<< HEAD
+=======
+        client_socket.disconnectFromHost();
+>>>>>>> dev_2
         to_console("so connection was not successful, probably you have missed something, try again\n");
         return 2;
     }

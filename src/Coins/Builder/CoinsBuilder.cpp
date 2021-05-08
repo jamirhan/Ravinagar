@@ -1,26 +1,26 @@
 #include "CoinsBuilder.h"
 
-void CoinsBuilder::generate(int num, CoinsFactory* coin_factory) {
+void CoinsBuilder::Generate(int num, CoinsFactory* coin_factory) {
     for (int i = 0; i < num; ++i) {
         coins.push_back(coin_factory->Create());
     }
 }
 
-CoinsBuilder* CoinsBuilder::set_AntiCoin(int num) {
-    generate(num, new AntiCoinCreator());
+CoinsBuilder* CoinsBuilder::SetAntiCoin(int num) {
+    Generate(num, new AntiCoinCreator());
     return this;
 }
 
-CoinsBuilder* CoinsBuilder::set_ClassicCoin(int num) {
-    generate(num, new ClassicCoinCreator());
+CoinsBuilder* CoinsBuilder::SetClassicCoin(int num) {
+    Generate(num, new ClassicCoinCreator());
     return this;
 }
 
-CoinsBuilder* CoinsBuilder::set_SuperCoin(int num) {
-    generate(num, new SuperCoinCreator());
+CoinsBuilder* CoinsBuilder::SetSuperCoin(int num) {
+    Generate(num, new SuperCoinCreator());
     return this;
 }
 
-std::deque<Coin*> CoinsBuilder::get_result() {
+std::deque<Coin*> CoinsBuilder::GetResult() {
     return coins;
 }
