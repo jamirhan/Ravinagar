@@ -114,3 +114,4 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
 
 target_link_libraries(Client PUBLIC
         Qt5::Network Qt5::Widgets Qt5::Core Qt5::Gui)
+        
