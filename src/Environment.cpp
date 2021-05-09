@@ -7,11 +7,11 @@ Environment::Environment(int size) {
 }
 
 void Environment::MakeCoins() {
-    int a_c = 10;
-    int c_c = 20;
-    int s_c = 10;
+    int a_c = Config::kInitialAmountAntiCoins;
+    int c_c = Config::kInitialAmountClassicCoins;
+    int s_c = Config::kInitialAmountSuperCoins;
     CoinsBuilder* cb = new CoinsBuilder();
-    cb->SetAntiCoin(a_c)->SetAntiCoin(c_c)->SetAntiCoin(s_c);
+    cb->SetAntiCoin(a_c)->SetClassicCoin(c_c)->SetSuperCoin(s_c);
     coins = cb->GetResult();
 }
 
