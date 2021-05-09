@@ -39,21 +39,6 @@ void Commutator::Receive(Message* message) {
         GameStat::GetInstance()->GetTraps()->Check(new_graph);
         GameStat::GetInstance()->GetGraphs()->AddGraph(new_graph);
     } else if (dynamic_cast<CreateCoins*> (message)) {
-<<<<<<< HEAD
-        auto* cb = new CoinsBuilder();
-        Config* config = Config::get_instance();
-        cb->set_AntiCoin(Config::amountCreatedAntiCoins);
-        cb->set_ClassicCoin(Config::amountCreatedClassicCoins);
-        cb->set_SuperCoin(Config::amountCreatedSuperCoins);
-        GameStat::get_instance()->get_coins().append(cb->get_result());
-    } else if (dynamic_cast<CreateTrap*> (message)) {
-        auto* msg = dynamic_cast<CreateTrap*>(message);
-        auto* tb = new TrapsBuilder();
-        Trap* new_trap = tb->generate(msg->type, msg->cords, GameStat::get_instance()->get_player(msg->player_id));
-        GameStat::get_instance()->get_traps().add_trap(new_trap);
-    }
-    else if (dynamic_cast<CreateUnit*>(message)) {
-=======
         CoinsBuilder* cb = new CoinsBuilder();
         Config* config = Config::GetInstance();
         cb->SetAntiCoin(config->kAmountCreatedAntiCoins);
@@ -71,7 +56,6 @@ void Commutator::Receive(Message* message) {
         GameStat::GetInstance()->GetTraps()->AddTrap(new_trap);
         GameStat::GetInstance()->GetUnits()->Check(new_trap); // TODO?
     } else if (dynamic_cast<CreateUnit*>(message)) {
->>>>>>> dev_2
         auto* msg = dynamic_cast<CreateUnit*>(message);
         Player* cur_player = GameStat::GetInstance()->GetPlayer(msg->player_id);
         Graph* required = GameStat::GetInstance()->GetGraphs()->GetPlayerGraphNum(cur_player, msg->graph_num);
@@ -189,10 +173,6 @@ void Commutator::Receive(Message* message) {
     else if (dynamic_cast<PrintMsg*>(message)){
         auto* msg = dynamic_cast<PrintMsg*>(message);
         Game::GetInstance()->write(*msg);
-    }
-    else if (dynamic_cast<OutputMessage*>(message)){
-        auto* msg = dynamic_cast<OutputMessage*>(message);
-        Game::get_instance()->write(*msg);
     }
 }
 

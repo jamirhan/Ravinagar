@@ -1,11 +1,7 @@
 #pragma once
 #include <string>
 #include <queue>
-<<<<<<< HEAD
-#include "Message.h"
-=======
 #include "../Message.h"
->>>>>>> dev_2
 #include <QUdpSocket>
 #include <QDtls>
 #include <QtNetwork>
@@ -15,17 +11,11 @@ struct AuthHandler: public QObject {
 public slots:
     void pskRequired(QSslPreSharedKeyAuthenticator *auth);
 };
-<<<<<<< HEAD
-
-
-class Server {
-=======
 
 struct RawCommand;
 
 
 class Server: QObject {
->>>>>>> dev_2
     QUdpSocket* udpSocket;
     QDtls* client_1 = nullptr;
     QDtls* client_2 = nullptr;
@@ -52,9 +42,6 @@ public:
     RawCommand get();
     bool is_running();
     void write(int player_num, QString msg);
-<<<<<<< HEAD
-=======
 public slots:
     void timeout();
->>>>>>> dev_2
 };

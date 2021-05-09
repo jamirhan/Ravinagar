@@ -4,6 +4,7 @@
 #include "../Traps/Trap.h"
 #include "Coin.h"
 #include "Player.h"
+#include "Game/Config.h"
 #include "Builder/CoinsBuilder.h"
 
 class Environment {

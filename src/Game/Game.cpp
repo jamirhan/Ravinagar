@@ -1,9 +1,5 @@
 #include "Game.h"
-<<<<<<< HEAD
-#include <thread>
-=======
 #include <iostream>
->>>>>>> dev_2
 
 
 template <typename Out>
@@ -32,39 +28,6 @@ bool Game::set_config(const QHostAddress &addr, quint16 port) {
     return true;
 }
 
-<<<<<<< HEAD
-
-bool Game::set_config(const QHostAddress &addr, quint16 port) {
-    Server::set_addr(addr, port);
-    server = Server::get_instance();
-    if (!server->is_running()) {
-        runs = false;
-        return false;
-    }
-    runs = true;
-    return true;
-}
-
-
-void Game::start() {
-    create_env();
-    run();
-}
-
-
-void Game::create_env() {
-    auto env = new Environment(Config::size);
-    Commutator::receive(new EnvMsg(env));
-}
-
-
-
-void Game::run() {
-    server->start();
-    while (runs) {
-        RawCommand command = server->get();
-        Commutator::receive(decompose(command.cmd, command.player_id));
-=======
 void Game::Start() {
     CreateEnv();
     Run();
@@ -96,13 +59,9 @@ void Game::Run() {
         catch (...) {
             Commutator::Receive(new PrintMsg("Unresolved Error occured", GameStat::GetInstance()->GetPlayer(command.player_id)));
         }
->>>>>>> dev_2
     }
 }
 
-void Game::write(const OutputMessage& msg) {
-    server->write(msg.player_num, msg.msg.c_str());
-}
 
 Message* Game::Decompose(std::string raw, int player_id) {
     std::vector<std::string> tokens = Split(raw);
@@ -135,11 +94,7 @@ Message* Game::Decompose(std::string raw, int player_id) {
     } else if (type_command == "Move") {
         return new MoveMsg(player_id, std::stoi(tokens[1]), type_command);
     }
-<<<<<<< HEAD
-    return new OutputMessage((player_id % 2) + 1, first_word + raw);
-=======
     return nullptr;
->>>>>>> dev_2
 }
 
 void Game::write(const PrintMsg& msg) {
