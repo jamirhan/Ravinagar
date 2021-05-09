@@ -23,8 +23,6 @@ bool Trap::Check(Unit* unit) {
 }
 
 Trap::~Trap() = default;
-<<<<<<< HEAD
-=======
 
 Clone::Clone(Point coords, Player* owner) : Trap(coords, owner) {}
 
@@ -47,4 +45,3 @@ bool Mine::Check(Unit* unit) {
     }
     return true;
 }
->>>>>>> dev_2

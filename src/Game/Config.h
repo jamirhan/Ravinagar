@@ -32,6 +32,10 @@ public:
             {"CreateUnit;Spy",          3},
     };
 
+    inline static int kInitialAmountAntiCoins = 10;
+    inline static int kInitialAmountClassicCoins = 20;
+    inline static int kInitialAmountSuperCoins = 10;
+
     inline static int kCostAntiCoin = -1;
     inline static int kCostClassCoin = 1;
     inline static int kCostSuperCoin = 3;

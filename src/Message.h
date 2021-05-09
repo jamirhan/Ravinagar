@@ -81,12 +81,6 @@ struct CreateTrap : virtual Message {
     std::string request;
 };
 
-struct OutputMessage: virtual Message {
-    OutputMessage(int, std::string);
-    int player_num;
-    std::string msg;
-};
-
 struct CreateUnit : virtual Message {
     CreateUnit(int, int, std::string unit_name, std::string request);
 
@@ -98,6 +92,7 @@ struct CreateUnit : virtual Message {
 
 struct RawCommand : virtual Message {
     RawCommand(std::string, int);
+
     std::string cmd;
     int player_id;
 };

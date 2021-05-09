@@ -24,7 +24,6 @@ bool Spy::Check(Trap* trap) {
 }
 
 bool CCTV::Check(Trap* trap) {
-    //TODO?
 }
 
 bool BestFriend::Check(Trap* trap) {
