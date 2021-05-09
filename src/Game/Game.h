@@ -39,14 +39,6 @@ public:
 
     [[maybe_unused]] void Start();
 
-<<<<<<< HEAD
-    void start();
-
-    bool set_config(const QHostAddress& addr, quint16 port);
-
-    void write(const OutputMessage& msg);
-=======
     void write(const PrintMsg& msg);
->>>>>>> dev_2
 
 };
