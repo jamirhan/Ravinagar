@@ -100,17 +100,15 @@ set(Boost_USE_STATIC_RUNTIME    OFF)
 set(GSL_ROOT_DIR "gsl-2.6")
 find_package(Boost 1.71.0 REQUIRED)
 find_package(Qt5 COMPONENTS Network Widgets Core Gui REQUIRED)
-#find_package(GSL REQUIRED)
+
 include_directories(${Boost_INCLUDE_DIRS})
-#include_directories(${GSL_INCLUDE_DIR})
+
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES} src/main.cpp)
 add_executable(Client ${client_headers} ${client_sources} src/Client/main.cpp)
-#target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES} GSL::gsl GSL::gslcblas)
 
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+find_package (Eigen3 3.1 REQUIRED)
 
-target_link_libraries(${PROJECT_NAME} PUBLIC
-        Qt5::Network Qt5::Widgets Qt5::Core Qt5::Gui)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES} Eigen3::Eigen Qt5::Network Qt5::Widgets Qt5::Core Qt5::Gui)
 
 target_link_libraries(Client PUBLIC
         Qt5::Network Qt5::Widgets Qt5::Core Qt5::Gui)

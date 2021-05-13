@@ -29,7 +29,7 @@
 #include <cfloat>
 #include <cmath>
 #include <set>
-#include "Eigen3/Eigen/Eigen"
+#include "Eigen/Eigen"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
